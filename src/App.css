@@ -1,0 +1,29 @@
+.game-container {
+  position: relative;
+  background-color: #87CEEB;
+  margin: 50px auto;
+}
+
+.frog,
+.lily-pad {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  font-size: 40px;
+  line-height: 60px;
+}
+
+.frog {
+  z-index: 2;
+  transition: all 0.1s ease-out;
+}
+
+.lily-pad {
+  z-index: 1;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+}
