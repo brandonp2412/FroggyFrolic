@@ -2,6 +2,10 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import "./FroggyFrolic.css";
 import GameOver from "./GameOver";
 import YouWon from "./YouWon";
+import arrowLeft from "./assets/arrow-left.svg";
+import arrowRight from "./assets/arrow-right.svg";
+import arrowUp from "./assets/arrow-up.svg";
+import arrowDown from "./assets/arrow-down.svg";
 
 const GRID_WIDTH = 5;
 const GRID_HEIGHT = 5;
@@ -72,7 +76,7 @@ function FroggyFrolic() {
         setWins(wins + 1);
         setYouWon(true);
       }
-    }, 50),
+    }, 300),
     [board]
   );
 
@@ -191,6 +195,51 @@ function FroggyFrolic() {
         )}
         <Frog position={frogPosition} />
       </div>
+      <img
+        src={arrowUp}
+        alt="Arrow up"
+        width={50}
+        onClick={() =>
+          handleKeyPress({
+            key: "ArrowUp",
+          })
+        }
+      />
+      <br />
+      <img
+        src={arrowLeft}
+        alt="Arrow left"
+        width={50}
+        style={{ marginRight: "2em" }}
+        onClick={() =>
+          handleKeyPress({
+            key: "ArrowLeft",
+          })
+        }
+      />
+      <img
+        src={arrowRight}
+        alt="Arrow right"
+        width={50}
+        style={{ marginLeft: "2em" }}
+        onClick={() =>
+          handleKeyPress({
+            key: "ArrowRight",
+          })
+        }
+      />
+      <br />
+      <img
+        src={arrowDown}
+        alt="Arrow down"
+        width={50}
+        onClick={() =>
+          handleKeyPress({
+            key: "ArrowDown",
+          })
+        }
+      />
+
       {wins === 1 && <h2>{wins} win 😄</h2>}
       {losses === 1 && <h1>{losses} loss 😱</h1>}
       {wins > 1 && <h2>{wins} wins 😄</h2>}
