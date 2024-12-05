@@ -76,7 +76,7 @@ function FroggyFrolic() {
         setWins(wins + 1);
         setYouWon(true);
       }
-    }, 300),
+    }, 200),
     [board]
   );
 
@@ -177,7 +177,7 @@ function FroggyFrolic() {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <h1>
+      <h1 style={{ marginLeft: ".5em", marginRight: ".5em" }}>
         Countdown: {Math.floor(seconds / 60)}:
         {(seconds % 60).toString().padStart(2, "0")}
       </h1>
