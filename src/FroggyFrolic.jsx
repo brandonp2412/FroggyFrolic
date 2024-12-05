@@ -1,15 +1,18 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
-import './FroggyFrolic.css';
-import GameOver from './GameOver';
-import YouWon from './YouWon';
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import "./FroggyFrolic.css";
+import GameOver from "./GameOver";
+import YouWon from "./YouWon";
 
-const GRID_WIDTH = 10;
+const GRID_WIDTH = 5;
 const GRID_HEIGHT = 5;
 const CELL_SIZE = 60;
 
 function Frog({ position }) {
   return (
-    <div className="frog" style={{ left: position.x * CELL_SIZE, top: position.y * CELL_SIZE }}>
+    <div
+      className="frog"
+      style={{ left: position.x * CELL_SIZE, top: position.y * CELL_SIZE }}
+    >
       🐸
     </div>
   );
@@ -17,7 +20,10 @@ function Frog({ position }) {
 
 function LilyPad({ position }) {
   return (
-    <div className="lily-pad" style={{ left: position.x * CELL_SIZE, top: position.y * CELL_SIZE }}>
+    <div
+      className="lily-pad"
+      style={{ left: position.x * CELL_SIZE, top: position.y * CELL_SIZE }}
+    >
       🍃
     </div>
   );
@@ -42,7 +48,6 @@ function FroggyFrolic() {
     setGameOver(true);
     setLosses(losses + 1);
   }, [seconds]);
-
 
   const debounce = (func, delay) => {
     return (...args) => {
@@ -75,16 +80,16 @@ function FroggyFrolic() {
     const newPosition = { ...frogPosition };
 
     switch (e.key) {
-      case 'ArrowLeft':
+      case "ArrowLeft":
         if (newPosition.x > 0) newPosition.x -= 1;
         break;
-      case 'ArrowRight':
+      case "ArrowRight":
         if (newPosition.x < GRID_WIDTH - 1) newPosition.x += 1;
         break;
-      case 'ArrowUp':
+      case "ArrowUp":
         if (newPosition.y > 0) newPosition.y -= 1;
         break;
-      case 'ArrowDown':
+      case "ArrowDown":
         if (newPosition.y < GRID_HEIGHT - 1) newPosition.y += 1;
         break;
       default:
@@ -96,18 +101,20 @@ function FroggyFrolic() {
   }
 
   React.useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
     return () => {
-      window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener("keydown", handleKeyPress);
     };
   }, [frogPosition, board]);
 
   React.useEffect(() => {
     resetBoard();
-  }, [])
+  }, []);
 
   const resetBoard = () => {
-    const gameBoard = Array(GRID_WIDTH).fill().map(() => Array(GRID_HEIGHT).fill(false));
+    const gameBoard = Array(GRID_WIDTH)
+      .fill()
+      .map(() => Array(GRID_HEIGHT).fill(false));
 
     let x = 0;
     let y = 0;
@@ -121,10 +128,18 @@ function FroggyFrolic() {
       const dy = Math.sign(Math.random() - 0.5);
 
       // Move if within bounds and closer to the end
-      if (x + dx >= 0 && x + dx < GRID_WIDTH && Math.abs(x + dx - endX) <= Math.abs(x - endX)) {
+      if (
+        x + dx >= 0 &&
+        x + dx < GRID_WIDTH &&
+        Math.abs(x + dx - endX) <= Math.abs(x - endX)
+      ) {
         x += dx;
       }
-      if (y + dy >= 0 && y + dy < GRID_HEIGHT && Math.abs(y + dy - endY) <= Math.abs(y - endY)) {
+      if (
+        y + dy >= 0 &&
+        y + dy < GRID_HEIGHT &&
+        Math.abs(y + dy - endY) <= Math.abs(y - endY)
+      ) {
         y += dy;
       }
     }
@@ -135,7 +150,8 @@ function FroggyFrolic() {
     // Randomly fill the rest of the board
     for (let i = 0; i < GRID_WIDTH; i++) {
       for (let j = 0; j < GRID_HEIGHT; j++) {
-        if (!gameBoard[i][j]) { // If not part of the guaranteed path
+        if (!gameBoard[i][j]) {
+          // If not part of the guaranteed path
           gameBoard[i][j] = Math.random() >= 0.7;
         }
       }
@@ -150,23 +166,37 @@ function FroggyFrolic() {
     setYouWon(false);
     resetBoard();
     setFrogPosition({ x: 0, y: 1 });
-  }
+  };
 
   if (gameOver) return <GameOver tryAgain={tryAgain} />;
-  if (youWon) return <YouWon playAgain={tryAgain} />
+  if (youWon) return <YouWon playAgain={tryAgain} />;
 
-  return <div>
-    <h1>Countdown: {Math.floor(seconds / 60)}:{(seconds % 60).toString().padStart(2, '0')}</h1>
-    <div className="game-container" style={{ width: GRID_WIDTH * CELL_SIZE, height: GRID_HEIGHT * CELL_SIZE }}>
-      {board.map((row, x) => row.map((cell, y) => cell && <LilyPad key={x + y} position={{ x, y }} />))}
-      <Frog position={frogPosition} />
+  return (
+    <div style={{ textAlign: "center" }}>
+      <h1>
+        Countdown: {Math.floor(seconds / 60)}:
+        {(seconds % 60).toString().padStart(2, "0")}
+      </h1>
+      <div
+        className="game-container"
+        style={{
+          width: GRID_WIDTH * CELL_SIZE,
+          height: GRID_HEIGHT * CELL_SIZE,
+        }}
+      >
+        {board.map((row, x) =>
+          row.map(
+            (cell, y) => cell && <LilyPad key={x + y} position={{ x, y }} />
+          )
+        )}
+        <Frog position={frogPosition} />
+      </div>
+      {wins === 1 && <h2>{wins} win 😄</h2>}
+      {losses === 1 && <h1>{losses} loss 😱</h1>}
+      {wins > 1 && <h2>{wins} wins 😄</h2>}
+      {losses > 1 && <h2>{losses} losses 😱</h2>}
     </div>
-    {wins === 1 && <h1>{wins} win 😄</h1>}
-    {losses === 1 && <h1>{losses} loss 😱</h1>}
-    {wins > 1 && <h1>{wins} wins 😄</h1>}
-    {losses > 1 && <h1>{losses} losses 😱</h1>}
-  </div>
-
+  );
 }
 
 export default FroggyFrolic;
