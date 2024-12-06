@@ -2,10 +2,7 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import "./FroggyFrolic.css";
 import GameOver from "./GameOver";
 import YouWon from "./YouWon";
-import arrowLeft from "./assets/arrow-left.svg";
-import arrowRight from "./assets/arrow-right.svg";
-import arrowUp from "./assets/arrow-up.svg";
-import arrowDown from "./assets/arrow-down.svg";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from "./Icons";
 
 const GRID_WIDTH = 5;
 const GRID_HEIGHT = 5;
@@ -195,10 +192,7 @@ function FroggyFrolic() {
         )}
         <Frog position={frogPosition} />
       </div>
-      <img
-        src={arrowUp}
-        alt="Arrow up"
-        width={50}
+      <ArrowUp
         onClick={() =>
           handleKeyPress({
             key: "ArrowUp",
@@ -206,22 +200,15 @@ function FroggyFrolic() {
         }
       />
       <br />
-      <img
-        src={arrowLeft}
-        alt="Arrow left"
-        width={50}
-        style={{ marginRight: "2em" }}
+      <ArrowLeft
         onClick={() =>
           handleKeyPress({
             key: "ArrowLeft",
           })
         }
       />
-      <img
-        src={arrowRight}
-        alt="Arrow right"
-        width={50}
-        style={{ marginLeft: "2em" }}
+
+      <ArrowRight
         onClick={() =>
           handleKeyPress({
             key: "ArrowRight",
@@ -229,10 +216,7 @@ function FroggyFrolic() {
         }
       />
       <br />
-      <img
-        src={arrowDown}
-        alt="Arrow down"
-        width={50}
+      <ArrowDown
         onClick={() =>
           handleKeyPress({
             key: "ArrowDown",
